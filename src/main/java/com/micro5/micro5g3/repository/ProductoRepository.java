@@ -1,10 +1,15 @@
 package com.micro5.micro5g3.repository;
 
-import com.micro5.micro5g3.model.Producto;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.UUID;
 
-public interface  ProductoRepository extends JpaRepository<Producto, Long> {
-    
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.micro5.micro5g3.model.Producto;
+
+@Repository
+public interface ProductoRepository extends JpaRepository<Producto, UUID> {
+    // Puedes agregar métodos personalizados aquí si lo necesitas
 }
 
 

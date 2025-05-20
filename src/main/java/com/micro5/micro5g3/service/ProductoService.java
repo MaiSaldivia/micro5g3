@@ -1,35 +1,34 @@
 package com.micro5.micro5g3.service;
 
-import com.micro5.micro5g3.model.Producto;
-import com.micro5.micro5g3.repository.ProductoRepository;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.micro5.micro5g3.model.Producto;
+import com.micro5.micro5g3.repository.ProductoRepository;
 
 @Service
 public class ProductoService {
 
-    private final ProductoRepository productoRepository;
-
-    public ProductoService(ProductoRepository productoRepository) {
-        this.productoRepository = productoRepository;
-    }
+    @Autowired
+    private ProductoRepository productoRepository;
 
     public List<Producto> listarTodos() {
         return productoRepository.findAll();
     }
 
-    public Optional<Producto> obtenerPorId(Long id) {
-        return productoRepository.findById(id);
+    public Producto guardar(Producto p) {
+        if (p.getIdProducto() == null) {
+            p.setIdProducto(UUID.randomUUID());
+        }
+        return productoRepository.save(p);
     }
 
-    public Producto guardar(Producto producto) {
-        return productoRepository.save(producto);
-    }
-
-    public void eliminar(Long id) {
-        productoRepository.deleteById(id);
+    public Producto buscarPorId(UUID id) {
+        return productoRepository.findById(id).orElse(null);
     }
 }
+
 

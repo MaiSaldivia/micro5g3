@@ -2,9 +2,10 @@ package com.micro5.micro5g3.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,29 +18,20 @@ import com.micro5.micro5g3.service.ProductoService;
 @RequestMapping("/api/productos")
 public class ProductoController {
 
-    private final ProductoService productoService;
-
-    public ProductoController(ProductoService productoService) {
-        this.productoService = productoService;
-    }
+    @Autowired
+    private ProductoService productoService;
 
     @GetMapping
-    public List<Producto> listar() {
-        return productoService.listarTodos();
+    public ResponseEntity<List<Producto>> getAll() {
+        List<Producto> productos = productoService.listarTodos();
+        if (productos.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(productos, HttpStatus.OK);
     }
 
     @PostMapping
-    public Producto crear(@RequestBody Producto producto) {
-        return productoService.guardar(producto);
-    }
-
-    @GetMapping("/{id}")
-    public Producto obtener(@PathVariable Long id) {
-        return productoService.obtenerPorId(id).orElse(null);
-    }
-
-    @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        productoService.eliminar(id);
+    public ResponseEntity<Producto> postProducto(@RequestBody Producto p) {
+        Producto nuevo = productoService.guardar(p);
+        return new ResponseEntity<>(nuevo, HttpStatus.CREATED);
     }
 }
+
