@@ -42,7 +42,7 @@ public class InventarioServiceTest {
 
         Producto producto = new Producto();
         producto.setIdProducto(idProducto);
-        producto.setNombre("Laptop");
+        producto.setNombre("Bolsa");
 
         when(productoRepository.findById(idProducto)).thenReturn(Optional.of(producto));
         when(inventarioRepository.save(any(Inventario.class))).thenAnswer(i -> i.getArgument(0));
