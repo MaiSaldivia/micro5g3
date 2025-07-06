@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.micro5.micro5g3.model.Inventario;
@@ -38,7 +38,7 @@ public class InventarioServiceTest {
     @Test
     void testAgregarProducto() {
         UUID idProducto = UUID.randomUUID();
-        UUID idTienda = UUID.randomUUID();
+        int idTienda = 12345;
 
         Producto producto = new Producto();
         producto.setIdProducto(idProducto);
@@ -87,7 +87,7 @@ public class InventarioServiceTest {
     @Test
     void testObtenerStockConInventario() {
         UUID idProducto = UUID.randomUUID();
-        UUID idTienda = UUID.randomUUID();
+        int idTienda = 12345;
 
         Inventario inv = new Inventario();
         inv.setCantidadStock(99);
@@ -103,7 +103,7 @@ public class InventarioServiceTest {
     @Test
     void testObtenerStockSinInventario() {
         UUID idProducto = UUID.randomUUID();
-        UUID idTienda = UUID.randomUUID();
+        int idTienda = 12345;
 
         when(inventarioRepository.findByProducto_IdProductoAndIdTienda(idProducto, idTienda))
                 .thenReturn(Optional.empty());
@@ -113,4 +113,3 @@ public class InventarioServiceTest {
         assertEquals(0, stock);
     }
 }
-

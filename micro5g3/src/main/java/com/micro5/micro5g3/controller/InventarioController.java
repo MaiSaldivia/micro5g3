@@ -26,7 +26,7 @@ public class InventarioController {
     private InventarioService inventarioService;
 
     @PostMapping("/agregar")
-    public ResponseEntity<Inventario> agregarProducto(@RequestParam UUID idTienda,
+    public ResponseEntity<Inventario> agregarProducto(@RequestParam int idTienda,
                                                       @RequestParam UUID idProducto,
                                                       @RequestParam int cantidad) {
         Inventario inv = inventarioService.agregarProducto(idTienda, idProducto, cantidad);
@@ -50,7 +50,7 @@ public class InventarioController {
     }
 
     @GetMapping("/tienda/{idTienda}")
-    public ResponseEntity<List<Inventario>> buscarPorTienda(@PathVariable UUID idTienda) {
+    public ResponseEntity<List<Inventario>> buscarPorTienda(@PathVariable int idTienda) {
         List<Inventario> lista = inventarioService.buscarPorTienda(idTienda);
         return lista.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                                : new ResponseEntity<>(lista, HttpStatus.OK);
@@ -58,7 +58,7 @@ public class InventarioController {
 
     @GetMapping("/stock")
     public ResponseEntity<Integer> obtenerStock(@RequestParam UUID idProducto,
-                                                @RequestParam UUID idTienda) {
+                                                @RequestParam int idTienda) {
         int stock = inventarioService.obtenerStock(idProducto, idTienda);
         return new ResponseEntity<>(stock, HttpStatus.OK);
     }
